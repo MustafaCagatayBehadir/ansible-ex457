@@ -1,0 +1,49 @@
+---
+- name: Configure multivendor snmp and dns information
+  hosts: all
+  gather_facts: false
+  vars:
+    nameservers:
+      - 8.8.8.8
+      - 4.4.4.4
+
+  tasks:
+    - name: Configure IOSv SNMP and DNS
+      block:
+        - name: Configure IOSv SNMP
+          cisco.ios.ios_snmp_server:
+            config:
+              location: "Thailand"
+              packet_size: 500
+              communities:
+                - name: cisco_snmp
+                  rw: true
+
+        - name: Configure IOSv DNS
+          cisco.ios.ios_system:
+            name_servers: "{{ nameservers }}" 
+      when: ansible_network_os == "ios"
+
+    - name: Configure EOSv SNMP
+      arista.eos.eos_snmp_server:
+        config:
+          location: "Turkiye"
+          communities:
+            - name: arista_snmp
+              ro: true
+      when: ansible_network_os == "eos"
+
+    - name: Configure VyOS SNMP
+      vyos.vyos.vyos_snmp_server:
+        config:
+          location: "Phuket"
+          communities:
+            - name: vyos_snmp
+              authorization_type: ro
+      when: ansible_network_os == "vyos"
+
+    - name: Configure Junos DNS
+      junipernetworks.junos.junos_system:
+        name_servers: "{{ nameservers }}"
+      when: ansible_network_os == "junos"
+      tags: never

@@ -1,0 +1,15 @@
+---
+- name: Cisco ios facts
+  hosts: ios
+  gather_facts: false
+
+  tasks:
+    - name: Gather ios facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+      register: facts
+
+    - name: Save ios facts
+      ansible.builtin.copy:
+        content: "{{ facts | to_nice_json }}"
+        dest: "facts/{{ inventory_hostname }}.json"

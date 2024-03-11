@@ -1,0 +1,21 @@
+- name: Configure the message of the day
+  hosts: all
+
+  tasks:
+    - name: Configure cisco ios motd
+      cisco.ios.ios_banner:
+        banner: motd
+        text: "Ansible managed device {{ ansible_net_model }}."
+      when: ansible_network_os == "ios"
+
+    - name: Configure arista eos motd
+      arista.eos.eos_banner:
+        banner: motd
+        text: "Ansible managed device {{ ansible_net_model }}."
+      when: ansible_network_os == 'eos'
+
+    - name: Configure vyos vyos motd
+      vyos.vyos.vyos_banner:
+        banner: post-login
+        text: "Ansible managed device {{ ansible_net_model }}."
+      when: ansible_network_os == 'vyos'

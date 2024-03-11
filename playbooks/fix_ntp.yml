@@ -1,0 +1,14 @@
+---
+- name: Fix NTP server configuration
+  hosts: ios,eos
+  gather_facts: false
+  vars:
+    ntp_servers:
+      - 10.0.0.1
+      - 10.0.0.4
+
+  tasks:
+    - name: Delete ntp servers
+      ansible.netcommon.cli_config:
+        config: "no ntp server {{ item }}"
+      loop: "{{ ntp_servers }}"

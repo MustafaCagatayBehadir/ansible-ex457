@@ -1,0 +1,19 @@
+---
+- name: Create config backups
+  hosts: ios
+  
+  tasks:
+    - name: Create backup configuration
+      cisco.ios.ios_config:
+        backup: true
+        backup_options:
+          filename: "{{ ansible_net_hostname }}.cfg"
+          dir_path: "./backups"
+      register: config_output
+      
+    - name: Remove non config lines - regexp
+      ansible.builtin.lineinfile:
+        path: "{{ config_output.backup_path }}"
+        line: "Building configuration..."
+        state: absent
+      delegate_to: localhost

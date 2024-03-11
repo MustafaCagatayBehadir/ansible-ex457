@@ -1,0 +1,19 @@
+---
+- name: Change interface description
+  hosts: ios,eos
+  gather_facts: false
+
+  tasks:
+    - name: Change ios interface description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet0/1
+            description: Configured Cisco IOSv by Ansible
+      when: ansible_network_os == 'ios'
+
+    - name: Change eos interface description
+      arista.eos.eos_interfaces:
+        config:
+          - name: Ethernet1
+            description: Configured Arita EOSv by Ansible
+      when: ansible_network_os == 'eos'    
