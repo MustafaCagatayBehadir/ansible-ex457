@@ -1,0 +1,15 @@
+---
+- name: Gather Junos Facts
+  hosts: junos
+  gather_facts: false
+
+  tasks:
+    - name: Gather junos facts
+      junipernetworks.junos.junos_facts:
+        gather_subset: all
+      register: facts
+
+   - name: Save junos facts
+     ansible.builtin.copy:
+       content: "{{ facts | to_nice_json }}"
+       dest: "facts/{{ inventory_hostname }}.json" 

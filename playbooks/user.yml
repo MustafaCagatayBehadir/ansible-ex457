@@ -1,0 +1,9 @@
+---
+- name: Create user on devices
+  hosts: ios,eos,vyos
+  gather_facts: false
+
+  tasks:
+    - name: Import user role
+      ansible.builtin.include_role:
+        name: "ansible-ex457-role"

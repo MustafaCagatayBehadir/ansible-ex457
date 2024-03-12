@@ -16,4 +16,3 @@
         path: "{{ config_output.backup_path }}"
         line: "Building configuration..."
         state: absent
-      delegate_to: localhost
