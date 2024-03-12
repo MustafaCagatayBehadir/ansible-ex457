@@ -2,4 +2,4 @@
 collections:
   - cisco.ios
   - arista.eos
-  - junipernetworks.juno
+  - junipernetworks.junos
