@@ -1,0 +1,9 @@
+---
+- name: Ping Test
+  hosts: ios
+  gather_facts: false
+
+  tasks:
+    - name: Test ping to gateway
+      cisco.ios.ios_ping:
+        dest: "{{ ping_dest }}"
