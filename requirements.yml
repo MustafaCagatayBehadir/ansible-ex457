@@ -1,2 +1,5 @@
 ---
-- src: https://github.com/MustafaCagatayBehadir/ansible-ex457-role.git
+collections:
+  - cisco.ios
+  - arista.eos
+  - junipernetworks.juno
